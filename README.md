@@ -32,15 +32,17 @@
 ### 功能展示
 
 #### 注册
-
+![signup](./images/signup.png)
 
 
 #### 登陆
 
-
+![login](./images/login.png)
 
 #### 产品展示
-
+![index](./images/index.png)
+![product](./images/product.png)
+![cart](./images/cart.png)
 
 
 #### 后台管理
@@ -49,5 +51,11 @@
 
 
 
+![backend](./images/backend.png)
 
+![productInfo](./images/productC.png)
+
+![orders](./images/orders.png)
+
+![user](./images/user.png)
 
