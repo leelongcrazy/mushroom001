@@ -11,8 +11,8 @@
 
 {% block nav_list %}
 <li class="active"><a href="{% url 'prod' %}">产品</a></li>
-<li><a href="cart">购物车</a></li>
-<li><a href="order">订单</a></li>
+<li><a href="{% url 'cart' %}">购物车</a></li>
+<li><a href="{% url 'orders_view' %}">订单</a></li>
 {% endblock %}
 
 {% block disp %}

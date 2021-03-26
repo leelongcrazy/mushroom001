@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block script %}
-{#<script src="{% static 'js/cart.js' %}"></script>#}
+<script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}
 
 {% block nav_list %}
 <li><a href="{% url 'prod' %}">产品</a></li>
-<li class="active"><a href="cart">购物车</a></li>
-<li><a href="order">订单</a></li>
+<li class="active"><a href="{% url 'cart' %}">购物车</a></li>
+<li><a href="{% url 'orders_view' %}">订单</a></li>
 {% endblock %}
 
 {% block disp %}
@@ -21,63 +21,33 @@
 {% if items|length > 0 %}
     <table class="table table-striped table-hover table-responsive" cellspacing="0">
         <thead>
-            <th width="50%" colspan="2"><input type="checkbox" name="check_all" id="check_all"><span>Cart Item</span></input></th>
-            <th width="10%">Servings</th>
-            <th width="10%">Unit Price</th>
-            <th width="15%">Created</th>
-            <th width="15%">Updated</th>
+            <th width="50%" colspan="2">
+                <input type="checkbox" name="check_all" id="check_all">
+                <span> 产       品 </span>
+                </input></th>
+            <th width="10%">数    量</th>
+            <th width="10%">单    价</th>
+            <th width="15%">创建时间</th>
+            <th width="15%">更新时间</th>
         </thead>
         <tbody>
             {% for item in items %}
             <tr>
                 <td width="50%" colspan="2">
                     <input type="checkbox" name="order_product_{{ item.item.id }}" data-class="order" data-item="{{ item.item.id }}" value="{{ item.item.quantity }}">
-                        <span data-toggle="tooltip" title="${{ item.item.product.price }}/serving">
+                        <span data-toggle="tooltip" title="￥{{ item.item.product.price }}/serving">
                             <strong>{{ item.item.product.category }}</strong> - {{ item.item.product.name}} ({{ item.item.product.size }})
                         </span>
                     </input>
                 </td>
-                <td width="10%"><input id="product_{{ item.item.id }}" name="product_{{ item.item.id }}" data-class="qty" data-item="{{ item.item.id }}" 
-                    type="number" min="0" style="width:50%" value="{{ item.quantity }}" /></td>
+                <td width="10%"><input id="product_{{ item.item.id }}" name="product_quantity_{{ item.item.id }}" data-class="qty" data-item="{{ item.item.id }}"
+                    type="number" min="0" style="width:50%" value="{{ item.item.quantity }}" /></td>
                 <td width="10%" id="product_price_{{ item.item.id }}" name="product_price_{{ item.item.id }}" data-class="price" data-item="{{ item.item.id }}">
                     {{ item.item.price }}
                 </td>
                 <td width="15%">{{ item.item.created|date:"Y/m/d H:i:s" }}</td>
                 <td width="15%">{{ item.item.updated|date:"Y/m/d H:i:s" }}</td>
             </tr>
-            
-            {% if item.item.topping.all|length > 0 %}
-                {% for topping in item.item.itemtopping_item.all %}
-                <tr>
-                    <td width="10%"></td>
-                    <td width="40%">
-                        <span data-toggle="tooltip" title="${{ topping.topping.price }}/serving">
-                            <span style="color:#bbb">+Topping:</span> {{ topping.topping.name }} x {{ topping.quantity }}
-                        </span>
-                    </td>
-                    <td width="10%"></td>
-                    <td width="10%"></td>
-                    <td width="15%"></td>
-                    <td width="15%"></td>
-                </tr>
-                {% endfor %}
-            {% endif %}
-            {% if item.item.addition.all|length > 0 %}
-                {% for addition in item.item.itemaddition_item.all %}
-                <tr>
-                    <td width="10%"></td>
-                    <td width="40%">
-                        <span data-toggle="tooltip" title="${{ addition.addition.price }}/serving">
-                            <span style="color:#bbbbbb">+Addition:</span> {{ addition.addition.name }} ({{ addition.addition.size }}) x {{ addition.quantity }}
-                        </span>
-                    </td>
-                    <td width="10%"></td>
-                    <td width="10%"></td>
-                    <td width="15%"></td>
-                    <td width="15%"></td>
-                </tr>
-                {% endfor %}
-            {% endif %}
 
             {% endfor %}
         </tbody>
@@ -91,19 +61,19 @@
     <div class="row">
         <div class="col-lg-9 col-md-8"></div>
         <div class="col-lg-1 col-md-1 col-sm-4">
-            <h4>Selected: </h4>
+            <h4>选中价格: </h4>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-8">
-            <h4 style="text-align:right;font-weight:bold">$<span id="select_price">{{ select_sum }}</span></h4>
+            <h4 style="text-align:right;font-weight:bold">¥<span id="select_price">{{ select_sum }}</span></h4>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-9 col-md-8"></div>
         <div class="col-lg-1 col-md-1 col-sm-4">
-            <h4>Total: </h4>
+            <h4>总  价: </h4>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-8">
-            <h4 style="text-align:right;font-weight:bold">$<span id="total_price">{{ cart_sum }}</span></h4>
+            <h4 style="text-align:right;font-weight:bold">¥<span id="total_price">{{ cart_sum }}</span></h4>
         </div>
     </div>
     <div class="row">

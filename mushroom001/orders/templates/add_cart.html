@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Topping / Additions
+购物车添加
 {% endblock %}
 
 {% block script %}
@@ -15,7 +15,7 @@ Topping / Additions
 <form id="prod_form" name="prod_form" action="{% url 'add_cart' id=product.id %}" method="post" onsubmit="return check_toppings()">
 {% csrf_token %}
 <label>
-    单价: <span style="font-size:x-large">$</span><span name="price" id="price" style="font-size:x-large">{{ product.price }}</span>
+    单价: <span style="font-size:x-large">￥</span><span name="price" id="price" style="font-size:x-large">{{ product.price }}</span>
 </label>
 <br />
 <label>数量:

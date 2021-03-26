@@ -21,6 +21,7 @@ class UserInfo(AbstractUser):
     join_time = models.DateTimeField(auto_now_add=True, verbose_name="加入时间")
     image = models.ImageField(max_length=100, upload_to='images/%Y/%m', default='/images/default.png',
                               verbose_name='头像')
+    update_time = models.DateTimeField(auto_now_add=True, verbose_name="更新时间")
 
     def __str__(self):
         return self.username
@@ -29,4 +30,3 @@ class UserInfo(AbstractUser):
         ordering = ['-join_time']
         verbose_name = '用户信息'
         verbose_name_plural = verbose_name
-
